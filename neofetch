@@ -2930,6 +2930,8 @@ get_resolution() {
                               awk '/Resolution:/ {printf $2" "$4} ; /UI Looks like:/ {print " "$4" "$6" "$8}' |\
                               while read phys_x phys_y res_x res_y refresh; do \
                                   scale_factor="$(expr $phys_x / $res_x)"; \
+                                  [[ "$refresh" == *Hz ]] && \
+                                      refresh="${refresh//Hz}"; \
                                   printf %s "${res_x}x${res_y}@${scale_factor}x @ ${refresh}Hz, "
                               done)"
             fi
